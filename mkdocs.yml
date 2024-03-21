@@ -10,8 +10,8 @@ extra_css:
   - style.css
 theme:
   name: material
-  logo: img/favicon.ico
-  favicon: img/favicon.ico
+  logo: docs/img/favicon.ico
+  favicon: docs/img/favicon.ico
   features:
     - navigation.instant
     - navigation.tracking
@@ -35,6 +35,6 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 nav:
-  - Home: README.md
+  - Home: docs/index.md
 plugins:
   - same-dir
