@@ -1,0 +1,40 @@
+site_name: OJD DAPS Salaries
+site_description: Annualising salaries from UK Job Adverts
+site_url: https://nestauk.github.io/ojd_daps_salaries
+repo_name: nestauk/ojd_daps_salaries
+repo_url: https://github.com/nestauk/ojd_daps_salaries
+extra:
+  homepage: https://nestauk.github.io/ojd_daps_salaries
+docs_dir: ./docs
+extra_css:
+  - style.css
+theme:
+  name: material
+  logo: img/favicon.ico
+  favicon: img/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+  font:
+    text: Century Gothic
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: amber
+      accent: pink
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+nav:
+  - Home: README.md
+plugins:
+  - same-dir
