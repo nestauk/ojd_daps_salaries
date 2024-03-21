@@ -1,59 +1,71 @@
 import pytest
 
-from ojd_daps_salaries import annualise_salaries
+from ..ojd_daps_salaries.extractor import annualise_salary
 
 
-def test_annualise_salaries():
-    assert annualise_salaries({"raw_salary": 100, "raw_salary_unit": "hour"}) == {
-        "min_salary": 100 * 37.5 * 52,
-        "max_salary": 100 * 37.5 * 52,
-        "min_annualised_salary": 100 * 37.5 * 52,
-        "max_annualised_salary": 100 * 37.5 * 52,
-        "rate": "hour",
+job_ad_1 = {
+    "raw_salary": 30000,
+    "raw_salary_unit": "YEAR",
+    "raw_salary_currency": "GBP"
+}
+job_ad_2 = {
+    "raw_salary": 30000,
+    "raw_salary_unit": "YEAR",
+    "raw_salary_currency": "USD"
+}
+job_ad_3 = {
+    "raw_salary_unit": "YEAR",
+    "raw_salary_currency": "GBP",
+    "raw_min_salary": 25000,
+    "raw_max_salary": 35000
+}
+job_ad_4 = {
+    "raw_salary_unit": "DAY",
+    "raw_salary_currency": "GBP",
+    "raw_min_salary": 250,
+    "raw_max_salary": 350
+}
+job_ad_5 = {
+    "raw_salary_unit": "YEAR",
+    "raw_salary_currency": "GBP",
+    "raw_min_salary": 25000,
+    "raw_max_salary": 350000
+}
+job_ad_6 = {
+    "raw_salary_unit": "YEAR",
+    "raw_salary_currency": "GBP",
+    "raw_min_salary": 65000,
+    "raw_max_salary": 650000
+}
+
+def test_annualise_salary():
+    assert annualise_salary(job_ad_1) == {
+        "min_salary": 30000,
+        "max_salary": 30000,
+        "min_annualised_salary": 30000,
+        "max_annualised_salary": 30000,
+        "rate": "YEAR"
     }
-    assert annualise_salaries({"raw_salary": 100, "raw_salary_unit": "day"}) == {
-        "min_salary": 100 * 5 * 52,
-        "max_salary": 100 * 5 * 52,
-        "min_annualised_salary": 100 * 5 * 52,
-        "max_annualised_salary": 100 * 5 * 52,
-        "rate": "day",
+    assert annualise_salary(job_ad_2) == None
+    assert annualise_salary(job_ad_3) == {
+        "min_salary": 25000,
+        "max_salary": 35000,
+        "min_annualised_salary": 25000,
+        "max_annualised_salary": 35000,
+        "rate": "YEAR"
     }
-    assert annualise_salaries({"raw_salary": 100, "raw_salary_unit": "week"}) == {
-        "min_salary": 100 * 52,
-        "max_salary": 100 * 52,
-        "min_annualised_salary": 100 * 52,
-        "max_annualised_salary": 100 * 52,
-        "rate": "week",
+    assert annualise_salary(job_ad_4) == {
+        "min_salary": 250,
+        "max_salary": 350,
+        "min_annualised_salary": 65000,
+        "max_annualised_salary": 91000,
+        "rate": "DAY"
     }
-    assert annualise_salaries({"raw_salary": 100, "raw_salary_unit": "month"}) == {
-        "min_salary": 100 * 12,
-        "max_salary": 100 * 12,
-        "min_annualised_salary": 100 * 12,
-        "max_annualised_salary": 100 * 12,
-        "rate": "month",
+    assert annualise_salary(job_ad_5) == {
+        "min_salary": 350000,
+        "max_salary": 350000,
+        "min_annualised_salary": 350000,
+        "max_annualised_salary": 350000,
+        "rate": "YEAR"
     }
-    assert annualise_salaries({"raw_salary": 100, "raw_salary_unit": "year"}) == {
-        "min_salary": 100,
-        "max_salary": 100,
-        "min_annualised_salary": 100,
-        "max_annualised_salary": 100,
-        "rate": "year",
-    }
-    assert annualise_salaries(
-        {"raw_salary": 100, "raw_salary_unit": "year", "raw_min_salary": 50}
-    ) == {
-        "min_salary": 50,
-        "max_salary": 100,
-        "min_annualised_salary": 50,
-        "max_annualised_salary": 100,
-        "rate": "year",
-    }
-    assert annualise_salaries(
-        {"raw_salary": 100, "raw_salary_unit": "year", "raw_max_salary": 200}
-    ) == {
-        "min_salary": 100,
-        "max_salary": 200,
-        "min_annualised_salary": 100,
-        "max_annualised_salary": 200,
-        "rate": "year",
-    }
+    assert annualise_salary(job_ad_6) == None

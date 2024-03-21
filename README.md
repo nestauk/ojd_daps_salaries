@@ -24,7 +24,7 @@ To use the model, you can import it and call the `extract_salary` function with 
 The model will return a dictionary, containing the raw salaries and the annualised salaries:
 
 ```python
-from ojd_daps_salaries import extract_salary
+import ojd_daps_salaries
 
 job_advert = {
     "raw_salary_currency": "GBP",
@@ -33,7 +33,7 @@ job_advert = {
     "raw_max_salary": 30000
 }
 
-salary = extract_salary(job_advert)
+salary = ojd_daps_salaries.annualise_salary(job_advert)
 print(salary)
 ```
 
